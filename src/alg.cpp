@@ -21,21 +21,21 @@ int priority(char x) {
     }
 }
 
-std::string infx2pstfx(std::string inf) {// преобразование выражение в постфиксную форму
+std::string infx2pstfx(std::string inf) {
     std::string pstfx;
     int i = 0;
     char x = inf[i];
-    char tem = 0;
+    char top = 0;
     TStack <char> stackChar;
     while (x) {
-        int prir;
-        prir = priority(x);
+        int prior;
+        prior = priority(x);
 
-        if (prir > -1) {
-            if ((prir == 0 || prir > priority(tem) ||
+        if (prior > -1) {
+            if ((prior == 0 || prior > priority(top) ||
                 stackChar.isEmpty()) && x != ')') {
                 if (stackChar.isEmpty())
-                    tem = x;
+                    top = x;
                 stackChar.push(x);
             } else if (x == ')') {
                 while (stackChar.get() != '(') {
@@ -45,16 +45,16 @@ std::string infx2pstfx(std::string inf) {// преобразование выр�
                 }
                 stackChar.pop();
                 if (stackChar.isEmpty())
-                    tem = 0;
+                    top = 0;
             } else {
                 while (!stackChar.isEmpty() &&
-                       priority(stackChar.get()) >= prir) {
+                       priority(stackChar.get()) >= prior) {
                     pstfx.push_back(stackChar.get());
                     pstfx.push_back(' ');
                     stackChar.pop();
                 }
                 if (stackChar.isEmpty())
-                    tem = x;
+                    top = x;
                 stackChar.push(x);
             }
         } else {
@@ -73,45 +73,45 @@ std::string infx2pstfx(std::string inf) {// преобразование выр�
     return pstfx;
 }
 
-int calculating(char oper, int num1, int num2) {
-    switch (oper) {
+int calculating(char operate, int number1, int number2) {
+    switch (operate) {
     case '+':
-        return num1 + num2;
+        return number1 + number2;
         break;
     case '-':
-        return num1 - num2;
+        return number1 - number2;
         break;
     case '*':
-        return num1 * num2;
+        return number1 * number2;
         break;
     case '/':
-        return num1 / num2;
+        return number1 / number2;
         break;
     }
 }
 
-int eval(std::string pst) {// вычисление выражения, записанного в постфиксной форме
+int eval(std::string pst) {
     TStack <int> stackInt;
-    int i = 0, res = 0;
+    int i = 0, result = 0;
     char x = pst[i];
     while (x) {
         if (x >= '0' && x <= '9') {
             int insertInt = 0;
-            int y = 1;
+            int dec = 1;
             while (x != ' ') {
-                insertInt += (x - 48) * y;
-                y *= 10;
+                insertInt += (ch - 48) * dec;
+                dec *= 10;
                 x = pst[++i];
             }
             stackInt.push(insertInt);
         } else {
-            char oper = x;
+            char operate = x;
             i++;
-            int num2 = stackInt.get();
+            int number2 = stackInt.get();
             stackInt.pop();
-            int num1 = stackInt.get();
+            int number1 = stackInt.get();
             stackInt.pop();
-            int res = calculating(oper, num1, num2);
+            int result = calculating(operate, number1, number2);
             stackInt.push(result);
         }
         if (i < pst.size())
@@ -119,7 +119,7 @@ int eval(std::string pst) {// вычисление выражения, запи�
         else
             x = 0;
     }
-    res = stackInt.get();
+    result = stackInt.get();
     stackInt.pop();
-    return res;
+    return result;
 }
