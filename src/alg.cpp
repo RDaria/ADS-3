@@ -28,11 +28,11 @@ std::string infx2pstfx(std::string inf) {
     char tem = 0;
     TStack <char> stackChar;
     while (x) {
-        int prior;
-        prior = priority(x);
+        int pr;
+        pr = priority(x);
 
-        if (prior > -1) {
-            if ((prior == 0 || prior > priority(tem) ||
+        if (pr > -1) {
+            if ((pr == 0 || pr > priority(tem) ||
                 stackChar.isEmpty()) && x != ')') {
                 if (stackChar.isEmpty())
                     tem = x;
@@ -48,7 +48,7 @@ std::string infx2pstfx(std::string inf) {
                     tem = 0;
             } else {
                 while (!stackChar.isEmpty() &&
-                       priority(stackChar.get()) >= prior) {
+                       priority(stackChar.get()) >= pr) {
                     pstfx.push_back(stackChar.get());
                     pstfx.push_back(' ');
                     stackChar.pop();
@@ -99,7 +99,7 @@ int eval(std::string pst) {
             int insertInt = 0;
             int dec = 1;
             while (x != ' ') {
-                insertInt += (ch - 48) * dec;
+                insertInt += (x - 48) * dec;
                 dec *= 10;
                 x = pst[++i];
             }
