@@ -92,15 +92,15 @@ int calculating(char oper, int num1, int num2) {
 
 int eval(std::string pst) {
     TStack <int> stackInt;
-    int i = 0, result = 0;
+    int i = 0, res = 0;
     char x = pst[i];
     while (x) {
         if (x >= '0' && x <= '9') {
             int insertInt = 0;
-            int dec = 1;
+            int y = 1;
             while (x != ' ') {
-                insertInt += (x - 48) * dec;
-                dec *= 10;
+                insertInt += (x - 48) * y;
+                y *= 10;
                 x = pst[++i];
             }
             stackInt.push(insertInt);
@@ -111,15 +111,15 @@ int eval(std::string pst) {
             stackInt.pop();
             int num1 = stackInt.get();
             stackInt.pop();
-            int result = calculating(oper, num1, num2);
-            stackInt.push(result);
+            int res = calculating(oper, num1, num2);
+            stackInt.push(res);
         }
         if (i < pst.size())
             x = pst[++i];
         else
             x = 0;
     }
-    result = stackInt.get();
+    res = stackInt.get();
     stackInt.pop();
-    return result;
+    return res;
 }
