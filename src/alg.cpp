@@ -73,19 +73,19 @@ std::string infx2pstfx(std::string inf) {
     return pstfx;
 }
 
-int calculating(char operate, int number1, int number2) {
-    switch (operate) {
+int calculating(char oper, int num1, int num2) {
+    switch (oper) {
     case '+':
-        return number1 + number2;
+        return num1 + num2;
         break;
     case '-':
-        return number1 - number2;
+        return num1 - num2;
         break;
     case '*':
-        return number1 * number2;
+        return num1 * num2;
         break;
     case '/':
-        return number1 / number2;
+        return num1 / num2;
         break;
     }
 }
@@ -105,13 +105,13 @@ int eval(std::string pst) {
             }
             stackInt.push(insertInt);
         } else {
-            char operate = x;
+            char oper = x;
             i++;
-            int number2 = stackInt.get();
+            int num2 = stackInt.get();
             stackInt.pop();
-            int number1 = stackInt.get();
+            int num1 = stackInt.get();
             stackInt.pop();
-            int result = calculating(operate, number1, number2);
+            int result = calculating(oper, num1, num2);
             stackInt.push(result);
         }
         if (i < pst.size())
